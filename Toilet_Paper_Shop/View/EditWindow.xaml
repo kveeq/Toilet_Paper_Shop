@@ -89,7 +89,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Click="btn_Image_Click"
-            Content="Поменять картинку" />
+            Content="Поменять картинку"
+            Style="{StaticResource ButtonStyle1}" />
 
         <Image
             x:Name="productImg"
@@ -108,7 +109,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Click="btn_ImageDel_Click"
-            Content="Удалить картинку" />
+            Content="Удалить картинку"
+            Style="{StaticResource ButtonStyle1}" />
 
         <Button
             x:Name="btn_Create"
@@ -118,8 +120,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
-            BorderBrush="Black"
-            Click="btn_Create_Click">
+            Click="btn_Create_Click"
+            Style="{StaticResource ButtonStyle1}">
             <Button.Content>
                 <TextBlock Text="Редактировать продукт" TextWrapping="WrapWithOverflow" />
             </Button.Content>

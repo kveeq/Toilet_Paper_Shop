@@ -158,9 +158,9 @@
             Margin="0,0,20,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            Background="White"
             Click="btn_add_Click"
-            Content="Добавить" />
+            Content="Добавить"
+            Style="{DynamicResource ButtonStyle1}" />
         <Button
             x:Name="DelBTN"
             Grid.Row="2"
@@ -172,6 +172,7 @@
             VerticalAlignment="Bottom"
             Background="White"
             Click="DelBTN_Click"
-            Content="Удалить" />
+            Content="Удалить"
+            Style="{StaticResource ButtonStyle1}" />
     </Grid>
 </Window>

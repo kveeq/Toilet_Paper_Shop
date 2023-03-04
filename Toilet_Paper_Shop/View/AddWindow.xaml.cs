@@ -23,7 +23,7 @@ namespace Toilet_Paper_Shop.View
         private void btn_Image_Click(object sender, RoutedEventArgs e)
         {
             if (ofdImage.ShowDialog() == true)
-            {
+            {   
                 BitmapImage image = new BitmapImage();
                 image.BeginInit();
                 image.UriSource = new Uri(ofdImage.FileName);
