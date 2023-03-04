@@ -1,0 +1,13 @@
+﻿<Application
+    x:Class="Toilet_Paper_Shop.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Toilet_Paper_Shop"
+    StartupUri="View/ProductListWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Button Padding="20,10" x:Key="ButtonStyle"/>
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

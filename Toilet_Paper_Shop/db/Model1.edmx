@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ToiletPaper_dbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="id_Type" Type="int" Nullable="false" />
+          <Property Name="CountPackaged" Type="int" />
+          <Property Name="Unit" Type="varchar" MaxLength="5" />
+          <Property Name="CountStocked" Type="int" />
+          <Property Name="MinimumBalance" Type="int" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="MaterialProd">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="NameMaterials" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MaterialsAndProducts">
+          <Key>
+            <PropertyRef Name="Id_Prod" />
+            <PropertyRef Name="Id_Material" />
+          </Key>
+          <Property Name="Id_Prod" Type="int" Nullable="false" />
+          <Property Name="Id_Material" Type="int" Nullable="false" />
+          <Property Name="RequiredAmountMaterials" Type="int" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id_Prod" />
+          </Key>
+          <Property Name="Id_Prod" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="MinCostForAgent" Type="int" />
+          <Property Name="Picture" Type="image" />
+          <Property Name="Id_Type" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Id_Material" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeProd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="NameType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Material_MaterialProd">
+          <End Role="MaterialProd" Type="Self.MaterialProd" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialProd">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsAndProducts_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="MaterialsAndProducts" Type="Self.MaterialsAndProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MaterialsAndProducts">
+              <PropertyRef Name="Id_Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsAndProducts_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="MaterialsAndProducts" Type="Self.MaterialsAndProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id_Prod" />
+            </Principal>
+            <Dependent Role="MaterialsAndProducts">
+              <PropertyRef Name="Id_Prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Count" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_TypeProd">
+          <End Role="TypeProd" Type="Self.TypeProd" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeProd">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ToiletPaper_dbModelContainer">
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialProd" EntityType="Self.MaterialProd" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialsAndProducts" EntityType="Self.MaterialsAndProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeProd" EntityType="Self.TypeProd" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Material_MaterialProd" Association="Self.FK_Material_MaterialProd">
+            <End Role="MaterialProd" EntitySet="MaterialProd" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsAndProducts_Material" Association="Self.FK_MaterialsAndProducts_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="MaterialsAndProducts" EntitySet="MaterialsAndProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsAndProducts_Product" Association="Self.FK_MaterialsAndProducts_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="MaterialsAndProducts" EntitySet="MaterialsAndProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Material" Association="Self.FK_Product_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_TypeProd" Association="Self.FK_Product_TypeProd">
+            <End Role="TypeProd" EntitySet="TypeProd" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ToiletPaper_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_Type" Type="Int32" Nullable="false" />
+          <Property Name="CountPackaged" Type="Int32" />
+          <Property Name="Unit" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CountStocked" Type="Int32" />
+          <Property Name="MinimumBalance" Type="Int32" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="MaterialProd" Relationship="Self.FK_Material_MaterialProd" FromRole="Material" ToRole="MaterialProd" />
+          <NavigationProperty Name="MaterialsAndProducts" Relationship="Self.FK_MaterialsAndProducts_Material" FromRole="Material" ToRole="MaterialsAndProducts" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Product_Material" FromRole="Material" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="MaterialProd">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="NameMaterials" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_Material_MaterialProd" FromRole="MaterialProd" ToRole="Material" />
+        </EntityType>
+        <EntityType Name="MaterialsAndProducts">
+          <Key>
+            <PropertyRef Name="Id_Prod" />
+            <PropertyRef Name="Id_Material" />
+          </Key>
+          <Property Name="Id_Prod" Type="Int32" Nullable="false" />
+          <Property Name="Id_Material" Type="Int32" Nullable="false" />
+          <Property Name="RequiredAmountMaterials" Type="Int32" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_MaterialsAndProducts_Material" FromRole="MaterialsAndProducts" ToRole="Material" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_MaterialsAndProducts_Product" FromRole="MaterialsAndProducts" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id_Prod" />
+          </Key>
+          <Property Name="Id_Prod" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MinCostForAgent" Type="Int32" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Id_Type" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Id_Material" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_Product_Material" FromRole="Product" ToRole="Material" />
+          <NavigationProperty Name="MaterialsAndProducts" Relationship="Self.FK_MaterialsAndProducts_Product" FromRole="Product" ToRole="MaterialsAndProducts" />
+          <NavigationProperty Name="TypeProd" Relationship="Self.FK_Product_TypeProd" FromRole="Product" ToRole="TypeProd" />
+        </EntityType>
+        <EntityType Name="TypeProd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="NameType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Product_TypeProd" FromRole="TypeProd" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Material_MaterialProd">
+          <End Role="MaterialProd" Type="Self.MaterialProd" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialProd">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsAndProducts_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="MaterialsAndProducts" Type="Self.MaterialsAndProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MaterialsAndProducts">
+              <PropertyRef Name="Id_Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Count" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsAndProducts_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="MaterialsAndProducts" Type="Self.MaterialsAndProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id_Prod" />
+            </Principal>
+            <Dependent Role="MaterialsAndProducts">
+              <PropertyRef Name="Id_Prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_TypeProd">
+          <End Role="TypeProd" Type="Self.TypeProd" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeProd">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToiletPaper_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Material" EntityType="Self.Material" />
+          <EntitySet Name="MaterialProd" EntityType="Self.MaterialProd" />
+          <EntitySet Name="MaterialsAndProducts" EntityType="Self.MaterialsAndProducts" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="TypeProd" EntityType="Self.TypeProd" />
+          <AssociationSet Name="FK_Material_MaterialProd" Association="Self.FK_Material_MaterialProd">
+            <End Role="MaterialProd" EntitySet="MaterialProd" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsAndProducts_Material" Association="Self.FK_MaterialsAndProducts_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="MaterialsAndProducts" EntitySet="MaterialsAndProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Material" Association="Self.FK_Product_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsAndProducts_Product" Association="Self.FK_MaterialsAndProducts_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="MaterialsAndProducts" EntitySet="MaterialsAndProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_TypeProd" Association="Self.FK_Product_TypeProd">
+            <End Role="TypeProd" EntitySet="TypeProd" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ToiletPaper_dbModelContainer" CdmEntityContainer="ToiletPaper_dbEntities">
+          <EntitySetMapping Name="Material">
+            <EntityTypeMapping TypeName="ToiletPaper_dbModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id_Type" ColumnName="id_Type" />
+                <ScalarProperty Name="CountPackaged" ColumnName="CountPackaged" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="CountStocked" ColumnName="CountStocked" />
+                <ScalarProperty Name="MinimumBalance" ColumnName="MinimumBalance" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialProd">
+            <EntityTypeMapping TypeName="ToiletPaper_dbModel.MaterialProd">
+              <MappingFragment StoreEntitySet="MaterialProd">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameMaterials" ColumnName="NameMaterials" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialsAndProducts">
+            <EntityTypeMapping TypeName="ToiletPaper_dbModel.MaterialsAndProducts">
+              <MappingFragment StoreEntitySet="MaterialsAndProducts">
+                <ScalarProperty Name="Id_Prod" ColumnName="Id_Prod" />
+                <ScalarProperty Name="Id_Material" ColumnName="Id_Material" />
+                <ScalarProperty Name="RequiredAmountMaterials" ColumnName="RequiredAmountMaterials" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="ToiletPaper_dbModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id_Prod" ColumnName="Id_Prod" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MinCostForAgent" ColumnName="MinCostForAgent" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Id_Type" ColumnName="Id_Type" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Id_Material" ColumnName="Id_Material" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeProd">
+            <EntityTypeMapping TypeName="ToiletPaper_dbModel.TypeProd">
+              <MappingFragment StoreEntitySet="TypeProd">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameType" ColumnName="NameType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
